@@ -33,6 +33,14 @@ body {
     font-optical-sizing: auto;
 }
 
+/*Styling login box*/
+.loginbox {
+    background-color: #D6B4FC;
+}
+
+.form-control {
+    background-color: #FAF9F6;
+}
 
 .card {
     border-radius: 10px;
