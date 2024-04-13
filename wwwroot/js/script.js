@@ -68,13 +68,6 @@ let loginStatus = false;
 
 
 //Code to create description animation
-//HTML for the description element
-const descriptionHTML = `
-    <div id="app-description" class="text-center description"></div>
-`;
-
-document.querySelector(".description").innerHTML = descriptionHTML; // Assuming `.body` is the correct selector for where you want the description to appear.
-
 const descriptions = [
     "Never miss a friend's birthday again!",
     "Your personal birthday reminder.",
@@ -82,31 +75,16 @@ const descriptions = [
     "Show your friends you care. Never miss a birthday.",
     "Effortlessly remember birthdays."
 ];
-
 let currentDescIndex = 0; // Keep track of the current description index
 
 async function updateDescription() {
-    const descriptionElement = document.getElementById("app-description");
+    const descriptionElement = document.querySelector(".description");
     descriptionElement.innerText = descriptions[currentDescIndex]; // Update the text inside the description div
     currentDescIndex = (currentDescIndex + 1) % descriptions.length; // Increment the index and loop back to 0 if it exceeds the array length
 }
 
 setInterval(updateDescription, 3000); // Set the interval to change description every 4000 milliseconds (4 seconds)
-
 updateDescription(); // Initial call to set the first description immediately
-
-/*const descStr = ["Never miss a friend's birthday again!", "Your personal birthday reminder.", "Your birthday reminder app.", "Show your friends you care. Never miss a birthday.", "Effortlessly remember birthdays."]
-const desc = document.querySelector(".description");
-printdesc();
-
-async function printdesc() {
-    let text = document.createTextNode(descStr[Math.floor(Math.random() * 5)]);
-    desc.appendChild(text);
-    if (loginStatus === false) {
-        setTimeout(desc.removeChild(text), 3000);
-        printdesc();
-    }
- }*/
 
 
 

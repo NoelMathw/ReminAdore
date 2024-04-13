@@ -27,8 +27,9 @@ body {
 /*Styling description*/
 .description {
     color: white;
+    font-family: "Montserrat", sans-serif;
     text-shadow: 0 0 7px #fff, 0 0 20px #fff, 0 0 20px #ff0080, 0 0 20px #ff0080, 0 0 70px #ff0080;
-    font-size: 175%;
+    font-size: 170%;
     text-align: center;
     font-optical-sizing: auto;
 }
