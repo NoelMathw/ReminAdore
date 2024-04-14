@@ -32,8 +32,6 @@
                             <button type="submit" class="btn btn-primary">Login</button>
                             <button type="button" class="btn btn-success">Sign Up</button>
 
-                            <a href="#" class="btn btn-link">Forgot Password?</a>
-
                             <div class="mt-3 text-danger" id="error-message"></div>
                         </form>
                     </div>
