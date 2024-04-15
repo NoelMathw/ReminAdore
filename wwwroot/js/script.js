@@ -1,5 +1,8 @@
-//HTML to show first login page
-    const loginHTML = `    
+//Objects and classes are defined here
+
+const LoginPage = {
+    //HTML to show first login page
+    loginHTML: `    
 	    <!--Simple logo at top of login page-->
 		    <nav class="navbar bg-light">
 			    <div class="container-fluid">
@@ -29,21 +32,93 @@
                                 <label for="password" class="form-label">Password</label>
                                 <input type="password" class="form-control" id="password" name="password" required>
                             </div>
-                            <button type="submit" class="btn btn-primary">Login</button>
-                            <button type="button" class="btn btn-success">Sign Up</button>
+                            <button type="submit" class="btn btn-primary login">Login</button>
+                            <button type="button" class="btn btn-success sign-up">Sign Up</button>
 
                             <div class="mt-3 text-danger" id="error-message"></div>
                         </form>
                     </div>
                 </div>
-            </div>`;
+            </div>`,
+    //Code to create description animation
+    descriptions: [
+        "Never miss a friend's birthday again!",
+        "Your personal birthday reminder.",
+        "Your birthday reminder app.",
+        "Show your friends you care. Never miss a birthday.",
+        "Effortlessly remember birthdays."
+    ],
+};
 
-    const body = document.querySelector(".body");
-    body.innerHTML = loginHTML;
+const SignUpPage = {
+    signupHTML: `<div class="container mt-5">
+                    <div class="row justify-content-center">
+                        <div class="col-md-6">
+                            <button class="btn btn-light mb-3 goBackButton">
+                                <i class="fas fa-arrow-left"></i>Go Back
+                            </button>
 
-let loginStatus = false;
+                            <div class="card">
+                                <div class="card-header text-center">
+                                    <h2>Sign Up</h2>
+                                </div>
+                                <div class="card-body">
+                                    <form>
+                                        <div class="mb-3">
+                                            <label for="name" class="form-label">Name</label>
+                                            <input type="text" class="form-control" id="name" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="email" class="form-label">Email</label>
+                                            <input type="email" class="form-control" id="email" required> </div>
+                                        <div class="mb-3">
+                                            <label for="username" class="form-label">Username</label>
+                                            <input type="text" class="form-control" id="username" required> </div>
+                                        <div class="mb-3">
+                                            <label for="dateOfBirth" class="form-label">Date of Birth</label>
+                                            <input type="date" class="form-control" id="dateOfBirth" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="password" class="form-label">Password</label>
+                                            <input type="password" class="form-control" id="password" required>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>`,
+};
+
+//Execution start code
+
+const body = document.querySelector(".body");
+body.innerHTML = LoginPage.loginHTML;
+//Code to create description animation
+let currentDescIndex = 0; // Keep track of the current description index
+async function updateDescription() {
+    const descriptionElement = document.querySelector(".description");
+    if (descriptionElement) {
+        descriptionElement.innerText = LoginPage.descriptions[currentDescIndex];  // Update the text inside the description div
+    } 
+    currentDescIndex = (currentDescIndex + 1) % LoginPage.descriptions.length; // Increment the index and loop back to 0 if it exceeds the array length
+}
+setInterval(updateDescription, 3000); // Set the interval to change description every 3000 milliseconds (3 seconds)
+updateDescription(); // Initial call to set the first description immediately
+
+// Code for sign - up button
+document.querySelector(".sign-up").addEventListener("click", () => { body.innerHTML = SignUpPage.signupHTML; });
+const goBackButton = document.querySelector(".goBackButton");
+if (goBackButton) {
+    goBackButton.addEventListener("click", () => {
+        body.innerHTML = LoginPage.loginHTML;
+    });
+}
+
 //Code related to loginbox
-    /*const usernameInput = document.getElementById('username');
+    /*let loginStatus = false;
+    const usernameInput = document.getElementById('username');
     const passwordInput = document.getElementById('password');
     const errorMessage = document.getElementById('error-message');
     const loginForm = document.getElementById('login-form');
@@ -63,30 +138,3 @@ let loginStatus = false;
         errorMessage.textContent = 'Invalid username or password.';
       }
     });*/
-
-
-//Code to create description animation
-const descriptions = [
-    "Never miss a friend's birthday again!",
-    "Your personal birthday reminder.",
-    "Your birthday reminder app.",
-    "Show your friends you care. Never miss a birthday.",
-    "Effortlessly remember birthdays."
-];
-let currentDescIndex = 0; // Keep track of the current description index
-
-async function updateDescription() {
-    const descriptionElement = document.querySelector(".description");
-    descriptionElement.innerText = descriptions[currentDescIndex]; // Update the text inside the description div
-    currentDescIndex = (currentDescIndex + 1) % descriptions.length; // Increment the index and loop back to 0 if it exceeds the array length
-}
-
-setInterval(updateDescription, 3000); // Set the interval to change description every 4000 milliseconds (4 seconds)
-updateDescription(); // Initial call to set the first description immediately
-
-
-
-    
-
-
-
