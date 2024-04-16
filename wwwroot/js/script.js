@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 //Objects and classes are defined here
 
 const LoginPage = {
@@ -12,10 +13,28 @@ const LoginPage = {
 				    </h1>
 			    </div>
 		    </nav>
+=======
+const body = document.querySelector(".body");
+>>>>>>> Testing
 
-        <!--Description of the app-->
-            <div id="app-descriptions text-center" class="description"></div>
+// Use fetch() correctly with async/await or then()
+fetch('./JSON/pages.JSON')
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(pages => {
+        // Now you have the JSON data
+        body.innerHTML = pages.loginPage;  // Assuming pages.json has a property `loginPage`
+    })
+    .catch(error => {
+        console.error('Failed to load JSON:', error);
+        body.innerHTML = '<p>Error loading page.</p>';
+    });
 
+<<<<<<< HEAD
         <!--HTML for login box-->
             <div class="container mt-5">
                 <div class="card mx-auto loginbox" style="width:fit-content; height:fit-content">
@@ -115,6 +134,11 @@ if (goBackButton) {
         body.innerHTML = LoginPage.loginHTML;
     });
 }
+=======
+// Further code for login and descriptions animations should be handled appropriately
+
+
+>>>>>>> Testing
 
 //Code related to loginbox
     /*let loginStatus = false;
