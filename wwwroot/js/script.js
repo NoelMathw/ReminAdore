@@ -1,45 +1,25 @@
-//HTML to show first login page
-    const loginHTML = `    
-	    <!--Simple logo at top of login page-->
-		    <nav class="navbar bg-light">
-			    <div class="container-fluid">
-				    <h1 class="navbar-brand logoname">
-					    <img src="img/ReminAdore Logo.png" alt="Logo" width="100" height="100" class="d-inline-block align-text-b">
-						    ReminAdore
-				    </h1>
-			    </div>
-		    </nav>
+const body = document.querySelector(".body");
 
-        <!--Description of the app-->
-            <div id="app-descriptions text-center" class="description"></div>
+// Use fetch() correctly with async/await or then()
+fetch('./JSON/pages.JSON')
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(pages => {
+        // Now you have the JSON data
+        body.innerHTML = pages.loginPage;  // Assuming pages.json has a property `loginPage`
+    })
+    .catch(error => {
+        console.error('Failed to load JSON:', error);
+        body.innerHTML = '<p>Error loading page.</p>';
+    });
 
-        <!--HTML for login box-->
-            <div class="container mt-5">
-                <div class="card mx-auto loginbox" style="width:fit-content; height:fit-content">
-                    <div class="card-header text-center">
-                        <h3 class="loginmessage">Login or sign-up to get started</h3>
-                    </div>
-                    <div class="card-body">
-                        <form id="login-form">
-                            <div class="mb-3">
-                                <label for="username" class="form-label">Username</label>
-                                <input type="text" class="form-control" id="username" name="username" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="password" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="password" name="password" required>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Login</button>
-                            <button type="button" class="btn btn-success">Sign Up</button>
+// Further code for login and descriptions animations should be handled appropriately
 
-                            <div class="mt-3 text-danger" id="error-message"></div>
-                        </form>
-                    </div>
-                </div>
-            </div>`;
 
-    const body = document.querySelector(".body");
-    body.innerHTML = loginHTML;
 
 let loginStatus = false;
 //Code related to loginbox
