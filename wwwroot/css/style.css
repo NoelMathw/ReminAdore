@@ -18,18 +18,20 @@ body {
     font-size: 100%;
     font-family: "Arial Rounded MT";
     font-optical-sizing: auto;
-    margin: 0px 2px 0px 2px;
-    padding: 5px 5px 5px 5px;
+    margin: 0px 20px 0px 20px;
 }
 .nav-pills .nav-link.active {
         color: white;
         text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 40px #00ffff;
         background-color: #CF9FFF;
-        /*order: solid #663399;*/
 }
-.big-plus-button {
-    font-size: 30px; /* Adjust size as needed */
-    padding: 20px; /* Adjust padding as needed */
+.AddB {
+    background-color: #3C0949;
+    color: white;
+    text-shadow: 0 0 7px #fff, 0 0 20px #fff, 0 0 20px #ff0080, 0 0 20px #ff0080, 0 0 70px #ff0080;
+    font-size: 20px; /* Adjust size as needed */
+    padding: 15px;
+    margin: 0px 20px 0px 20px;
 }
 
 /*Styling Logoname*/

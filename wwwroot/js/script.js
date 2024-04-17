@@ -36,7 +36,7 @@ const AllB = document.querySelector(".AllB");
 const AddB = document.querySelector(".AddB");
 
 
-//Functions which change page according to page user selects
+//Functions which change page according to navigation button user selects
 function runHomePage() {
     Home.classList.add('active');
     AllB.classList.remove('active');
@@ -50,9 +50,8 @@ function runAllBPage() {
 }
 
 function runAddBPage() {
-    AddB.classList.add('active');
-    Home.classList.remove('active');
-    AllB.classList.remove('active');
+    //addReminder();
+    runHomePage();
 }
 
 
