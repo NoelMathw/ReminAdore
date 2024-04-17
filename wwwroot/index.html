@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Welcome to ReminAdore | No more forgetting birthdays</title>
-	<link rel="icon" href="img/ReminAdore Logo.png"/>
+    <link rel="icon" href="img/ReminAdore Logo.png" />
     <!--Linking Bootstrap-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
@@ -16,6 +16,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap" rel="stylesheet">
     <!--Font for description (Montserrat)-->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <!-- FontAwesome for the plus icon -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <!--Embedding script to HTML-->
     <script src="js/script.js" defer></script>
 </head>
@@ -31,9 +33,12 @@
         </h1>
         <!--Navigation pills-->
         <nav class="nav nav-pills nav-justified">
-            <button class="nav-link active">Home</button>
-            <button class="nav-link">All Birthdays</button>
-            <button class="nav-link">Add Birthdays</button>
+            <button class="nav-link active Home">Home</button>
+            <button class="nav-link AllB">All Birthdays</button>
+            <button class="nav-link AddB">Add Birthdays</button>
+            <button class="btn btn-primary btn-lg big-plus-button">
+                <i class="fa fa-plus"></i>
+            </button>
         </nav>
     </nav>
 
@@ -42,7 +47,9 @@
     <div id="app-descriptions text-center" class="description"></div>
 
 
-    <!--Actual content goes here-->
-
+    <!--Actual content goes here (based on what users selects to view)-->
+    <div id="main-content" class="main-content">
+        <!-- Content based on navigation selection will be displayed here -->
+    </div>
 </body>
 </html>

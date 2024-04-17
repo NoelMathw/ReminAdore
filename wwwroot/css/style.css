@@ -3,15 +3,14 @@ body {
     background-color: #663399;
 }
 
+/*Styling navigation buttons and navigation bar*/
 .navbar {
     padding: 0px 0px 0px 0px;
     background-color: #663399;
 }
-
 .nav {
     border: solid #663399;
 }
-
 .nav-pills .nav-link {
     background-color: #663399;
     color: white;
@@ -22,13 +21,16 @@ body {
     margin: 0px 2px 0px 2px;
     padding: 5px 5px 5px 5px;
 }
-
-    .nav-pills .nav-link.active {
+.nav-pills .nav-link.active {
         color: white;
         text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 40px #00ffff;
         background-color: #CF9FFF;
         /*order: solid #663399;*/
-    }
+}
+.big-plus-button {
+    font-size: 30px; /* Adjust size as needed */
+    padding: 20px; /* Adjust padding as needed */
+}
 
 /*Styling Logoname*/
 .logoname,
