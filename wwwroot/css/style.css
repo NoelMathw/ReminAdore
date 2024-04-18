@@ -55,5 +55,16 @@ body {
     font-size: 150%;
     text-align: center;
     font-optical-sizing: auto;
+    padding-bottom:50px; 
 }
 
+/*Stlying add reminder card*/
+.newcard {
+    background-color: #D8BFD8;
+    color: #511660;
+}
+
+input {
+    background-color: #511660;
+    color: #511660;
+}
