@@ -58,13 +58,27 @@ body {
     padding-bottom:50px; 
 }
 
-/*Stlying add reminder card*/
+/*Styling add reminder card*/
 .newcard {
+    background-color: #511660;
+    color: #D8BFD8;
+}
+
+.form-control::placeholder {
+    color: #511660;
+}
+.form-control,
+.form-control:focus {
     background-color: #D8BFD8;
     color: #511660;
 }
 
-input {
-    background-color: #511660;
+.btn-outline-primary {
+    background-color: #E0B0FF;
     color: #511660;
+}
+.btn-primary {
+    background-color: #E0B0FF;
+    color: #511660;
+    font-size: 110%;
 }
