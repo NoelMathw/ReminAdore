@@ -2,16 +2,28 @@
 //class template for to-do list
 class ToDoClass {
     ToDoString; //String variable to hold to-do list
-    ToDoDate; //
+    ToDoDate; //Date variable to hold reminder date
 }
 
 //class for creating reminder objects 
 class ReminderClass {
-    #name;  //name of user
-    #DOB; //DOB of the user
-    ToDo = [{}]; //To do list for each user
+    #name;  //name of person
+    #DOB; //DOB of the person
+    #RMB; //Remind me before
+    ToDo = []; //To do list for each person
+    assignAttr(name, DOB, RMB) { //function to assign name and DOB
+        this.#name = name;
+        this.#DOB = DOB;
+        this.#RMB = RMB;
+    }
 }
 
+//object for reminders (template to store into JSON file)
+const Reminders = new ReminderClass();
+
+//Array to hold TodoClass objects
+let TDArray = [];
+const TDVar = new ToDoClass();
 //HTML object for adding reminder
 const AddBHTML = {
     HTML: `
@@ -94,7 +106,48 @@ function runAllBPage() {
 }
 
 function runAddBPage() {
-    MainContent.innerHTML = AddBHTML.HTML;
+    MainContent.innerHTML = AddBHTML.HTML;  //Changing main page content into a card so that the user can add more reminders
+    const AddTD = document.querySelector("#add-todo-btn");
+    const TDitems = document.querySelector(".todo-items");
+    let tdcount = 1;  //taking account of number of to do items
+    AddTD.addEventListener("click", () => {   //Adding more to do inputs for user
+        const tdstring = `<div class="todo-item mb-3">
+                            <label for="todo-${tdcount + 1}" class="form-label">To-Do Item</label>
+                            <input type="text" class="form-control todo-input" id="todo-${tdcount + 1}" placeholder="Enter a to-do item">
+                            <label for="todo-reminder-${tdcount + 1}" class="form-label mt-2">Reminder Date</label>
+                            <input type="date" class="form-control todo-reminder-input" id="todo-reminder-${tdcount + 1}">
+                        </div>`;
+        TDitems.innerHTML += tdstring;
+        ++tdcount;
+    });
+    //Input elements
+    const nameInput = document.querySelector("#name");
+    const DOBInput = document.querySelector("#dateOfBirth");
+    const RBInput = document.querySelector("#remindBefore");
+    let ToDOStringElements = []; //Array to hold to-do string elements
+    let ToDODateElements = []; //Array to hold to-do date elements
+    for (let i = 1; i <= tdcount; i++)  //Storing to-do elements to array
+    {
+        ToDOStringElements.push(document.querySelector(`#todo-${i}`));
+        ToDODateElements.push(document.querySelector(`#todo-reminder-${i}`));
+    }
+    //Function to store values to variables and to JSON file
+    document.querySelector("#reminder-form").addEventListener("submit", (event) => {
+        event.preventDefault();
+        //Acquiring all data into variables
+        const name = nameInput.value;
+        const DOB = DOBInput.value;
+        const RB = RBInput.value;
+        //Array to hold to-do data in variables
+        let ToDOString = [];
+        let ToDODate = [];
+        for (let i = 0; i < tdcount; i++) {  //Storing string and date of to-do list to array
+            ToDOString.push(ToDOStringElements[i].value);
+            ToDODate.push(ToDODateElements[i].value);
+        }
+        Reminders.assignAttr(name, DOB, RB);
+
+    });
     runHomePage();
 }
 
@@ -107,7 +160,7 @@ AddB.addEventListener("click", runAddBPage);
 runHomePage(); //First call to run the home page
 
 
-/*const body = document.querySelector(".body"); //Using this element to change body
+/*
     fetch('./JSON/pages.JSON')
         .then(response => {
             if (!response.ok) {
