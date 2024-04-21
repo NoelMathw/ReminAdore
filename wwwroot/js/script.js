@@ -21,9 +21,9 @@ class ReminderClass {
 //object for reminders (template to store into JSON file)
 const Reminders = new ReminderClass();
 
-//Array to hold TodoClass objects
-let TDArray = [];
+//Variable of TodoClass type (template to store into ReminderClass and then store into JSON file)
 const TDVar = new ToDoClass();
+
 //HTML object for adding reminder
 const AddBHTML = {
     HTML: `
@@ -145,8 +145,27 @@ function runAddBPage() {
             ToDOString.push(ToDOStringElements[i].value);
             ToDODate.push(ToDODateElements[i].value);
         }
-        Reminders.assignAttr(name, DOB, RB);
-
+        Reminders.assignAttr(name, DOB, RB); //Assigning inputs to Reminders object
+        for (let i = 0; i < tdcount; i++) {  //Assigning to-do data to Reminders object in the form of ToDoClass object template
+            TDVar.ToDoString = ToDOString[i];
+            TDVar.ToDoDate = ToDODate[i];
+            Reminders.ToDo.push(TDVar);
+        }
+        //const ReminderJSON = JSON.stringify(Reminders);
+        fetch('http://localhost:3000/add-reminder', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(Reminders)
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
     });
     runHomePage();
 }
