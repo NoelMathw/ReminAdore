@@ -1,2 +1,98 @@
 [
+    {
+        "name": "Beena P. Varghese",
+        "DOB": "1972-02-20",
+        "RMB": "15",
+        "ToDo": [
+            {
+                "ToDoString": "Plan a trip for her",
+                "ToDoDate": "2025-01-10"
+            }
+        ]
+    },
+    {
+        "name": "Viktoria",
+        "DOB": "2024-09-01",
+        "RMB": "10",
+        "ToDo": [
+            {
+                "ToDoString": "Get her a present ",
+                "ToDoDate": "2024-08-28"
+            }
+        ]
+    },
+    {
+        "name": "Snigdha",
+        "DOB": "2002-09-13",
+        "RMB": "7",
+        "ToDo": [
+            {
+                "ToDoString": "Get her a gift",
+                "ToDoDate": ""
+            },
+            {
+                "ToDoString": "Ask Trisha to plan a party for Snigdha",
+                "ToDoDate": ""
+            }
+        ]
+    },
+    {
+        "name": "Priyanka Tandel",
+        "DOB": "1998-09-21",
+        "RMB": "10",
+        "ToDo": [
+            {
+                "ToDoString": "Get her protein powder",
+                "ToDoDate": "2024-09-05"
+            }
+        ]
+    },
+    {
+        "name": "Trisha \"Pandhi\" Sultanpur",
+        "DOB": "2002-02-05",
+        "RMB": "30",
+        "ToDo": [
+            {
+                "ToDoString": "Plan a big party for her",
+                "ToDoDate": "2025-01-05"
+            },
+            {
+                "ToDoString": "Contact Vik and Piyu and decide what we're doing",
+                "ToDoDate": "2025-01-05"
+            }
+        ]
+    },
+    {
+        "name": "Ira",
+        "DOB": "2021-05-21",
+        "RMB": "1",
+        "ToDo": [
+            {
+                "ToDoString": "",
+                "ToDoDate": ""
+            }
+        ]
+    },
+    {
+        "name": "Mimmi",
+        "DOB": "1983-12-14",
+        "RMB": "1",
+        "ToDo": [
+            {
+                "ToDoString": "",
+                "ToDoDate": ""
+            }
+        ]
+    },
+    {
+        "name": "Krupa Sara Johnson",
+        "DOB": "2007-04-26",
+        "RMB": "3",
+        "ToDo": [
+            {
+                "ToDoString": "Wish her",
+                "ToDoDate": ""
+            }
+        ]
+    }
 ]

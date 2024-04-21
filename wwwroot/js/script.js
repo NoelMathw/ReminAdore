@@ -18,10 +18,6 @@ class ReminderClass {
     }
 }
 
-//object for reminders (template to store into JSON file)
-const Reminders = new ReminderClass();
-
-
 //HTML object for adding reminder
 const AddBHTML = {
     HTML: `
@@ -104,6 +100,8 @@ function runAllBPage() {
 }
 
 function runAddBPage() {
+    //object for reminders (template to store into JSON file)
+    const Reminders = new ReminderClass();
     MainContent.innerHTML = AddBHTML.HTML;
     let tdcount = 1;
 
@@ -147,8 +145,9 @@ function runAddBPage() {
             .catch((error) => {
                 console.error('Error:', error);
             });
+        runHomePage();
     });
-    runHomePage();
+
 }
 
 
