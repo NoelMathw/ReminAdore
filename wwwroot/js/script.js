@@ -144,8 +144,22 @@ function runAllBPage() {
                     const addedCards = CardRow.querySelectorAll('.newcard');
                     const currentCard = addedCards[addedCards.length - 1];
                     currentCard.querySelector(".personname").innerText = currentCard.querySelector(".personname").textContent + " " + reminder.name;
-
-                    currentCard.querySelector(".personage").innerText = currentCard.querySelector(".personage").textContent + " " + reminder.name; 
+                    let DOBString = reminder.DOB.split("-");
+                    let currentDate = new Date
+                    let age;
+                    if ((currentDate.getMonth() + 1) < DOBString[1]) { age = currentDate.getFullYear() - DOBString[0] - 1; }
+                    else if ((currentDate.getMonth() + 1) === DOBString[1]) {
+                        if ((currentDate.getDate()) < DOBString[2]) {
+                            age = currentDate.getFullYear() - DOBString[0] - 1;
+                        }
+                        else {
+                            age = currentDate.getFullYear() - DOBString[0];
+                        }
+                    }
+                    else {
+                        age = currentDate.getFullYear() - DOBString[0];
+                    }
+                    currentCard.querySelector(".personage").innerText = currentCard.querySelector(".personage").textContent + " " + age; 
                     currentCard.querySelector(".personDOB").innerText = currentCard.querySelector(".personDOB").textContent + " " + reminder.DOB;
                     currentCard.querySelector(".personRMB").innerText = currentCard.querySelector(".personRMB").textContent + " " + reminder.RMB + " days";
                 }
