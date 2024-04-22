@@ -60,6 +60,31 @@ const AddBHTML = {
 </div>`,
 }
 
+//HTML object for All Birthdays page
+const AllBHTML = {
+    FirstHTML: `<div class="container">
+                    <div class="row d-flex flex-row">
+                    </div>
+                </div>`,
+
+    CardHTML:`<div class="col-md-6 col-lg-4"> <div class="card newcard">
+                   <div class="card-header">
+                        <h3 class="personname"></h3>
+                   </div>
+                   <div class="card-body">
+                        <p class="personage"><strong>Age:</strong></p>
+                        <p class="personDOB"><strong>Date of Birth:</strong></p>
+                        <p class="personRMB"><strong>Remind me before:</strong></p>
+
+                        <h4>To-Do Items</h4>
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                </li>
+                            </ul>
+                   </div>
+              </div>
+              </div>`,
+}
 
 //Code to create description animation
 const descriptions = [
@@ -78,6 +103,7 @@ async function updateDescription() {
 setInterval(updateDescription, 3000); // Set the interval to change description every 4000 milliseconds (4 seconds)
 updateDescription(); // Initial call to set the first description immediately
 
+
 //Element object of the main-content
 const MainContent = document.querySelector(".main-content");
 //Element object of navigation buttons
@@ -93,13 +119,69 @@ function runHomePage() {
     AddB.classList.remove('active');
 } 
 
+let ReminderArray;
 function runAllBPage() {
     AllB.classList.add('active');
     Home.classList.remove('active');
     AddB.classList.remove('active');
+    MainContent.innerHTML = AllBHTML.FirstHTML;
+    const CardRow = document.querySelector(".row");
+    fetch('./JSON/Reminders.JSON')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(Reminders => {
+            ReminderArray = Reminders;
+            // Ensure that we process the array here, within the .then() where it's defined
+            Reminders.forEach((reminder, index) => {
+                if (index < Reminders.length) {  // Check to make sure you don't exceed array bounds, if you know there are only 8
+                    const cardHTML = AllBHTML.CardHTML;
+                    CardRow.innerHTML += cardHTML;
+                    // Update the newly added card with reminder information
+                    const addedCards = CardRow.querySelectorAll('.newcard');
+                    const currentCard = addedCards[addedCards.length - 1];
+                    currentCard.querySelector(".personname").innerText = currentCard.querySelector(".personname").textContent + " " + reminder.name;
+
+                    currentCard.querySelector(".personage").innerText = currentCard.querySelector(".personage").textContent + " " + reminder.name; 
+                    currentCard.querySelector(".personDOB").innerText = currentCard.querySelector(".personDOB").textContent + " " + reminder.DOB;
+                    currentCard.querySelector(".personRMB").innerText = currentCard.querySelector(".personRMB").textContent + " " + reminder.RMB + " days";
+                }
+            });
+        })
+        .catch(error => {
+            console.error('Failed to load JSON:', error);
+            MainContent.innerHTML = '<p>Error loading page.</p>';
+        });
+    /*fetch('./JSON/Reminders.JSON')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(Reminders => {
+            ReminderArray = Reminders;  
+        })
+        .catch(error => {
+            console.error('Failed to load JSON:', error);
+            body.innerHTML = '<p>Error loading page.</p>';
+        });
+    for (let i = 0; i < 8; ++i) {
+        CardRow.innerHTML += AllBHTML.CardHTML;
+        document.querySelector(".personname").innerText = ReminderArray[i]["name"];
+        document.querySelector(".personage").innerText = ReminderArray[i]["name"];
+        document.querySelector(".personDOB").innerText = ReminderArray[i]["DOB"];
+        document.querySelector(".personRMB").innerText = ReminderArray[i]["RMB"];
+    }*/
 }
 
 function runAddBPage() {
+    AddB.classList.add('active');
+    AllB.classList.remove('active');
+    Home.classList.remove('active');
     //object for reminders (template to store into JSON file)
     const Reminders = new ReminderClass();
     MainContent.innerHTML = AddBHTML.HTML;
