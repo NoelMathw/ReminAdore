@@ -12,12 +12,12 @@
     },
     {
         "name": "Viktoria",
-        "DOB": "2024-09-01",
+        "DOB": "2003-09-01",
         "RMB": "10",
         "ToDo": [
             {
                 "ToDoString": "Get her a present ",
-                "ToDoDate": "2024-08-28"
+                "ToDoDate": "2003-08-28"
             }
         ]
     },
@@ -49,7 +49,7 @@
     },
     {
         "name": "Trisha \"Pandhi\" Sultanpur",
-        "DOB": "2002-02-05",
+        "DOB": "2003-02-05",
         "RMB": "30",
         "ToDo": [
             {

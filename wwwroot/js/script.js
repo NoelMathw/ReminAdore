@@ -78,8 +78,6 @@ const AllBHTML = {
 
                         <h4>To-Do Items</h4>
                             <ul class="list-group">
-                                <li class="list-group-item">
-                                </li>
                             </ul>
                    </div>
               </div>
@@ -162,6 +160,15 @@ function runAllBPage() {
                     currentCard.querySelector(".personage").innerText = currentCard.querySelector(".personage").textContent + " " + age; 
                     currentCard.querySelector(".personDOB").innerText = currentCard.querySelector(".personDOB").textContent + " " + reminder.DOB;
                     currentCard.querySelector(".personRMB").innerText = currentCard.querySelector(".personRMB").textContent + " " + reminder.RMB + " days";
+                    const TD = document.querySelectorAll(".list-group");
+                    const currentTD = TD[TD.length - 1];
+                    //const todoList = document.querySelector(`.todo-list-${index}`);
+                    reminder.ToDo.forEach(todo => {
+                        const todoItem = document.createElement('li');
+                        todoItem.className = 'list-group-item';
+                        todoItem.textContent = `${todo.ToDoString} - Due date: ${todo.ToDoDate}`;
+                        currentTD.appendChild(todoItem);
+                    });
                 }
             });
         })
@@ -169,27 +176,6 @@ function runAllBPage() {
             console.error('Failed to load JSON:', error);
             MainContent.innerHTML = '<p>Error loading page.</p>';
         });
-    /*fetch('./JSON/Reminders.JSON')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(Reminders => {
-            ReminderArray = Reminders;  
-        })
-        .catch(error => {
-            console.error('Failed to load JSON:', error);
-            body.innerHTML = '<p>Error loading page.</p>';
-        });
-    for (let i = 0; i < 8; ++i) {
-        CardRow.innerHTML += AllBHTML.CardHTML;
-        document.querySelector(".personname").innerText = ReminderArray[i]["name"];
-        document.querySelector(".personage").innerText = ReminderArray[i]["name"];
-        document.querySelector(".personDOB").innerText = ReminderArray[i]["DOB"];
-        document.querySelector(".personRMB").innerText = ReminderArray[i]["RMB"];
-    }*/
 }
 
 function runAddBPage() {
@@ -253,22 +239,3 @@ AllB.addEventListener("click", runAllBPage);
 AddB.addEventListener("click", runAddBPage);
 
 runHomePage(); //First call to run the home page
-
-
-/*
-    fetch('./JSON/pages.JSON')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(pages => {
-            // Now you have the JSON data
-            body.innerHTML = pages.loginPage;  // Assuming pages.json has a property `loginPage`
-        })
-        .catch(error => {
-            console.error('Failed to load JSON:', error);
-            body.innerHTML = '<p>Error loading page.</p>';
-        });*/
-    
