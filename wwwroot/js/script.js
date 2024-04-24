@@ -151,7 +151,7 @@ const Home = document.querySelector(".Home");
 const AllB = document.querySelector(".AllB");
 const AddB = document.querySelector(".AddB");
 
-let ReminderArray;
+
 //Functions which change page according to navigation button user selects
 function runHomePage() {
     Home.classList.add('active');
@@ -162,6 +162,10 @@ function runHomePage() {
     const TasksToday = document.querySelector(".TTSection");
     const UpBirthday = document.querySelector(".UBSection");
     const UpTasks = document.querySelector(".UTSection");
+    let BT = 0;
+    let UB = 0;
+    let TT = 0;
+    let UT = 0;
     fetch('./JSON/Reminders.JSON')
         .then(response => {
             if (!response.ok) {
@@ -170,12 +174,12 @@ function runHomePage() {
             return response.json();
         })
         .then(Reminders => {
-            ReminderArray = Reminders;
             Reminders.forEach((reminder, index) => {
                 if (index < Reminders.length) {
                     let DOBString = reminder.DOB.split("-");
                     let currentDate = new Date;
                     if ((Number(DOBString[1]) === (currentDate.getMonth() + 1)) && Number(DOBString[2]) === currentDate.getDate()) {
+                        BT = 1;
                         BirthdayToday.innerHTML += HomeHTML.CardHTML;
                         //Update the newly added card with information
                         const addedCards = BirthdayToday.querySelectorAll('.newcard');
@@ -197,15 +201,16 @@ function runHomePage() {
                         currentCard.querySelector(".card-text").textContent = `Age: ${age}`;
                     }
                     if ((Number(DOBString[1]) === (currentDate.getMonth() + 1))) {
+                        UB = 1;
                         UpBirthday.innerHTML += HomeHTML.CardHTML;
                         //Update the newly added card with information
                         const addedCards = UpBirthday.querySelectorAll('.newcard');
                         const currentCard = addedCards[addedCards.length - 1];
                         currentCard.querySelector(".card-title").innerText = reminder.name;
                         let age;
-                        if ((currentDate.getMonth() + 1) < DOBString[1]) { age = currentDate.getFullYear() - DOBString[0] - 1; }
-                        else if ((currentDate.getMonth() + 1) === DOBString[1]) {
-                            if ((currentDate.getDate()) < DOBString[2]) {
+                        if ((currentDate.getMonth() + 1) < Number(DOBString[1])) { age = currentDate.getFullYear() - DOBString[0] - 1; }
+                        else if ((currentDate.getMonth() + 1) === Number(DOBString[1])) {
+                            if ((currentDate.getDate()) < Number(DOBString[2])) {
                                 age = currentDate.getFullYear() - DOBString[0] - 1;
                             }
                             else {
@@ -223,17 +228,31 @@ function runHomePage() {
                         todoItem.className = 'list-group-item';
                         if ((Number(ToDODate[1]) === (currentDate.getMonth() + 1)) && (Number(ToDODate[0]) === currentDate.getFullYear())) {
                             if ((Number(ToDODate[2]) - currentDate.getDate()) < 7) {
+                                UT = 1;
                                 todoItem.textContent = `${todo.ToDoString} (For ${reminder.name}'s birthday)`;
                                 UpTasks.appendChild(todoItem);
                             }
                         }
                         if ((Number(ToDODate[1]) === (currentDate.getMonth() + 1)) && (Number(ToDODate[2]) === currentDate.getDate()) && (Number(ToDODate[0]) === currentDate.getFullYear())) {
+                            TT = 1;
                             todoItem.textContent = `${todo.ToDoString} (For ${reminder.name}'s birthday)`;
                             TasksToday.appendChild(todoItem);
                         }
                     }
                 }
             });
+            if (BT === 0) {
+                BirthdayToday.innerHTML = `<p class="text-center default-message">Don't worry. There's no birthdays today, we'll remind you if there is one</p>`;
+            }
+            if (TT === 0) {
+                TasksToday.innerHTML = `<p class="text-center default-message">Don't worry. There's no tasks due today, we'll remind you if there is one</p>`;
+            }
+            if (UB === 0) {
+                UpBirthday.innerHTML = `<p class="text-center default-message">There's no birthdays anytime soon</p>`;
+            }
+            if (UT === 0) {
+                UpBirthday.innerHTML = `<p class="text-center default-message">No upcoming tasks for you. Relax and have fun</p>`;
+            }
         })
         .catch(error => {
             console.error('Failed to load JSON:', error);
@@ -266,9 +285,9 @@ function runAllBPage() {
                     let DOBString = reminder.DOB.split("-");
                     let currentDate = new Date;
                     let age;
-                    if ((currentDate.getMonth() + 1) < DOBString[1]) { age = currentDate.getFullYear() - DOBString[0] - 1; }
-                    else if ((currentDate.getMonth() + 1) === DOBString[1]) {
-                        if ((currentDate.getDate()) < DOBString[2]) {
+                    if ((currentDate.getMonth() + 1) < Number(DOBString[1])) { age = currentDate.getFullYear() - DOBString[0] - 1; }
+                    else if ((currentDate.getMonth() + 1) === Number(DOBString[1])) {
+                        if ((currentDate.getDate()) < Number(DOBString[2])) {
                             age = currentDate.getFullYear() - DOBString[0] - 1;
                         }
                         else {
@@ -367,3 +386,65 @@ AllB.addEventListener("click", runAllBPage);
 AddB.addEventListener("click", runAddBPage);
 
 runHomePage(); //First call to run the home page
+
+
+//Requesting notification permission from user
+Notification.requestPermission((result) => {
+    console.log(result);
+});
+
+//Notifying user of birthdays or tasks
+function notify() {
+    if (!("Notification" in window)) {
+        alert("This browser does not support desktop notification");
+    }
+    else if (Notification.permission === "granted") {
+        fetch('./JSON/Reminders.JSON')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(Reminders => {
+                Reminders.forEach((reminder, index) => {
+                    if (index < Reminders.length) {
+                        let DOBString = reminder.DOB.split("-");
+                        let currentDate = new Date;
+                        if ((Number(DOBString[1]) === (currentDate.getMonth() + 1)) && Number(DOBString[2]) === currentDate.getDate()) {
+                            const text = `Hey there. It's ${reminder.name}'s birthday today. Don't forget to wish him`;
+                            const img = `./img/ReminAdore Logo.png`;
+                            const notification = new Notification("Birthday reminder", { body: text, icon: img });
+                        }
+                        if ((Number(DOBString[1]) === (currentDate.getMonth() + 1)) && (Number(DOBString[2]) - currentDate.getDate()) === Number(reminder.RMB)) {
+                            const text = `Hey there. It's ${reminder.name}'s birthday within ${reminder.RMB} days. You told us to remind you today`;
+                            const img = `./img/ReminAdore Logo.png`;
+                            const notification = new Notification("Birthday reminder", { body: text, icon: img });
+                        }
+                        for (const todo of reminder.ToDo) {
+                            let ToDODate = todo.ToDoDate.split("-");
+                            if ((Number(ToDODate[1]) === (currentDate.getMonth() + 1)) && (Number(ToDODate[2]) === currentDate.getDate()) && (Number(ToDODate[0]) === currentDate.getFullYear())) {
+                                const text = `Hey, you have a task due today
+Task: ${todo.ToDoString} (For ${reminder.name}'s birthday)`;
+                                const img = `./img/ReminAdore Logo.png`;
+                                const notification = new Notification("Task reminder", { body: text, icon: img });
+                            }
+                        }
+                    }
+                });
+            })
+            .catch(error => {
+                console.error('Failed to load JSON:', error);
+                MainContent.innerHTML = '<p>Error loading page.</p>';
+            });
+    }
+}
+
+
+
+const now = new Date();
+const targetTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0); // 12 AM 
+const millisecondsUntilTarget = targetTime.getTime() - now.getTime();
+
+// Execute the notification function at 12 AM
+setTimeout(notify, millisecondsUntilTarget);

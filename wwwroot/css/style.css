@@ -107,3 +107,9 @@
     margin-top: 20px;
     width: 100%;
 }
+
+.default-message {
+    color: #D8BFD8;
+    font-family: "Montserrat", sans-serif;
+    font-size: 120%;
+}
