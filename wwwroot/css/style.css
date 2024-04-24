@@ -1,5 +1,5 @@
 /*Styling body*/
-body {
+.body {
     background-color: #663399;
 }
 
@@ -15,8 +15,10 @@ body {
     background-color: #663399;
     color: white;
     text-shadow: 0 0 7px #fff, 0 0 20px #fff, 0 0 20px #ff0080, 0 0 20px #ff0080, 0 0 70px #ff0080;
-    font-size: 100%;
-    font-family: "Arial Rounded MT";
+    font-size: 90%;
+    font-family: "Varela Round", sans-serif;
+    font-weight: bold;
+    font-style: normal;
     font-optical-sizing: auto;
     margin: 0px 20px 0px 20px;
 }
@@ -58,9 +60,9 @@ body {
 /*Styling description*/
 .description {
     color: white;
-    font-family: "Montserrat", sans-serif;
+    font-family: "Pristina";
     text-shadow: 0 0 7px #fff, 0 0 20px #fff, 0 0 20px #ff0080, 0 0 20px #ff0080, 0 0 70px #ff0080;
-    font-size: 150%;
+    font-size: 180%;
     text-align: center;
     font-optical-sizing: auto;
     padding-bottom:50px; 
@@ -81,6 +83,8 @@ body {
 .list-group-item{
     background-color: #D8BFD8;
     color: #511660;
+    margin-top:8px;
+    margin-bottom:8px;
 }
 
 .btn-outline-primary {
@@ -91,4 +95,15 @@ body {
     background-color: #E0B0FF;
     color: #511660;
     font-size: 110%;
+}
+
+.section-heading {
+    color: #D8BFD8;
+    font-family: "Montserrat", sans-serif;
+    font-size: 150%;
+    border-bottom: 7px solid #511660;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    width: 100%;
 }

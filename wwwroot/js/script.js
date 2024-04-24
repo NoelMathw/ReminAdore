@@ -76,12 +76,54 @@ const AllBHTML = {
                         <p class="personDOB"><strong>Date of Birth:</strong></p>
                         <p class="personRMB"><strong>Remind me before:</strong></p>
 
-                        <h4>To-Do Items</h4>
+                        <h4>To-Do List</h4>
                             <ul class="list-group">
                             </ul>
                    </div>
               </div>
               </div>`,
+}
+
+//HTML object for Home page
+const HomeHTML = {
+    HTML: `<div class="container">
+            <section class="section">
+                <h2 class="section-heading">Birthdays Today</h2>
+                <div class="row BTSection">
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-heading">Tasks due Today</h2>
+                    <ul class="list-group TTSection">
+                    </ul>
+            </section>
+
+            <section class="section">
+                <h2 class="section-heading">Upcoming Birthdays (< month)</h2>
+                    <div class="row UBSection">
+                    </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-heading">Upcoming Tasks (< week)</h2>
+                    <ul class="list-group UTSection">
+                    </ul>
+            </section>
+           </div>`,
+
+    CardHTML: `<div class="col-md-4">
+                    <div class="card newcard">
+                        <div class="card-body">
+                            <h5 class="card-title"></h5>
+                            <p class="card-text">Age: </p>
+                        </div>
+                    </div>
+               </div>`,
+
+    TaskHTML: `<li class="list-group-item">Task 1</li>
+               <li class="list-group-item">Task 2</li>`
+
 }
 
 //Code to create description animation
@@ -109,15 +151,96 @@ const Home = document.querySelector(".Home");
 const AllB = document.querySelector(".AllB");
 const AddB = document.querySelector(".AddB");
 
-
+let ReminderArray;
 //Functions which change page according to navigation button user selects
 function runHomePage() {
     Home.classList.add('active');
     AllB.classList.remove('active');
     AddB.classList.remove('active');
+    MainContent.innerHTML = HomeHTML.HTML;
+    const BirthdayToday = document.querySelector(".BTSection");
+    const TasksToday = document.querySelector(".TTSection");
+    const UpBirthday = document.querySelector(".UBSection");
+    const UpTasks = document.querySelector(".UTSection");
+    fetch('./JSON/Reminders.JSON')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(Reminders => {
+            ReminderArray = Reminders;
+            Reminders.forEach((reminder, index) => {
+                if (index < Reminders.length) {
+                    let DOBString = reminder.DOB.split("-");
+                    let currentDate = new Date;
+                    if ((Number(DOBString[1]) === (currentDate.getMonth() + 1)) && Number(DOBString[2]) === currentDate.getDate()) {
+                        BirthdayToday.innerHTML += HomeHTML.CardHTML;
+                        //Update the newly added card with information
+                        const addedCards = BirthdayToday.querySelectorAll('.newcard');
+                        const currentCard = addedCards[addedCards.length - 1];
+                        currentCard.querySelector(".card-title").innerText = reminder.name;
+                        let age;
+                        if ((currentDate.getMonth() + 1) < DOBString[1]) { age = currentDate.getFullYear() - DOBString[0] - 1; }
+                        else if ((currentDate.getMonth() + 1) === DOBString[1]) {
+                            if ((currentDate.getDate()) < DOBString[2]) {
+                                age = currentDate.getFullYear() - DOBString[0] - 1;
+                            }
+                            else {
+                                age = currentDate.getFullYear() - DOBString[0];
+                            }
+                        }
+                        else {
+                            age = currentDate.getFullYear() - DOBString[0];
+                        }
+                        currentCard.querySelector(".card-text").textContent = `Age: ${age}`;
+                    }
+                    if ((Number(DOBString[1]) === (currentDate.getMonth() + 1))) {
+                        UpBirthday.innerHTML += HomeHTML.CardHTML;
+                        //Update the newly added card with information
+                        const addedCards = UpBirthday.querySelectorAll('.newcard');
+                        const currentCard = addedCards[addedCards.length - 1];
+                        currentCard.querySelector(".card-title").innerText = reminder.name;
+                        let age;
+                        if ((currentDate.getMonth() + 1) < DOBString[1]) { age = currentDate.getFullYear() - DOBString[0] - 1; }
+                        else if ((currentDate.getMonth() + 1) === DOBString[1]) {
+                            if ((currentDate.getDate()) < DOBString[2]) {
+                                age = currentDate.getFullYear() - DOBString[0] - 1;
+                            }
+                            else {
+                                age = currentDate.getFullYear() - DOBString[0];
+                            }
+                        }
+                        else {
+                            age = currentDate.getFullYear() - DOBString[0];
+                        }
+                        currentCard.querySelector(".card-text").textContent = `Age: ${age}`;
+                    }
+                    for (const todo of reminder.ToDo) {
+                        let ToDODate = todo.ToDoDate.split("-");
+                        const todoItem = document.createElement('li');
+                        todoItem.className = 'list-group-item';
+                        if ((Number(ToDODate[1]) === (currentDate.getMonth() + 1)) && (Number(ToDODate[0]) === currentDate.getFullYear())) {
+                            if ((Number(ToDODate[2]) - currentDate.getDate()) < 7) {
+                                todoItem.textContent = `${todo.ToDoString} (For ${reminder.name}'s birthday)`;
+                                UpTasks.appendChild(todoItem);
+                            }
+                        }
+                        if ((Number(ToDODate[1]) === (currentDate.getMonth() + 1)) && (Number(ToDODate[2]) === currentDate.getDate()) && (Number(ToDODate[0]) === currentDate.getFullYear())) {
+                            todoItem.textContent = `${todo.ToDoString} (For ${reminder.name}'s birthday)`;
+                            TasksToday.appendChild(todoItem);
+                        }
+                    }
+                }
+            });
+        })
+        .catch(error => {
+            console.error('Failed to load JSON:', error);
+            MainContent.innerHTML = '<p>Error loading page.</p>';
+        });
 } 
 
-let ReminderArray;
 function runAllBPage() {
     AllB.classList.add('active');
     Home.classList.remove('active');
@@ -132,10 +255,8 @@ function runAllBPage() {
             return response.json();
         })
         .then(Reminders => {
-            ReminderArray = Reminders;
-            // Ensure that we process the array here, within the .then() where it's defined
             Reminders.forEach((reminder, index) => {
-                if (index < Reminders.length) {  // Check to make sure you don't exceed array bounds, if you know there are only 8
+                if (index < Reminders.length) {  
                     const cardHTML = AllBHTML.CardHTML;
                     CardRow.innerHTML += cardHTML;
                     // Update the newly added card with reminder information
@@ -143,7 +264,7 @@ function runAllBPage() {
                     const currentCard = addedCards[addedCards.length - 1];
                     currentCard.querySelector(".personname").innerText = currentCard.querySelector(".personname").textContent + " " + reminder.name;
                     let DOBString = reminder.DOB.split("-");
-                    let currentDate = new Date
+                    let currentDate = new Date;
                     let age;
                     if ((currentDate.getMonth() + 1) < DOBString[1]) { age = currentDate.getFullYear() - DOBString[0] - 1; }
                     else if ((currentDate.getMonth() + 1) === DOBString[1]) {
@@ -162,13 +283,20 @@ function runAllBPage() {
                     currentCard.querySelector(".personRMB").innerText = currentCard.querySelector(".personRMB").textContent + " " + reminder.RMB + " days";
                     const TD = document.querySelectorAll(".list-group");
                     const currentTD = TD[TD.length - 1];
-                    //const todoList = document.querySelector(`.todo-list-${index}`);
-                    reminder.ToDo.forEach(todo => {
+                    for (const todo of reminder.ToDo) {
                         const todoItem = document.createElement('li');
                         todoItem.className = 'list-group-item';
-                        todoItem.textContent = `${todo.ToDoString} - Due date: ${todo.ToDoDate}`;
-                        currentTD.appendChild(todoItem);
-                    });
+                        if (todo.ToDoString === "") { continue; }
+                        else if (todo.ToDoDate === "") {
+                            todoItem.textContent = `${todo.ToDoString}`;
+                            currentTD.appendChild(todoItem);
+                            continue;
+                        }
+                        else {
+                            todoItem.textContent = `${todo.ToDoString} (Due on: ${todo.ToDoDate})`;
+                            currentTD.appendChild(todoItem);
+                        }
+                    }
                 }
             });
         })
