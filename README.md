@@ -24,6 +24,7 @@ git clone https://github.com/NoelMathw/ReminAdore.git
 3. **Set up server script**
 - Make sure node.js is installed
 - Open the file in 'cmd'
+- Type 'npm install cors'
 - Type 'npm install express'
 - Type 'node server.js'
 
